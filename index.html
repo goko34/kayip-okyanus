@@ -33,6 +33,49 @@
   color-scheme:dark;
 }
 [hidden]{display:none!important}
+#guildBox{pointer-events:auto;padding:0;overflow:hidden;max-height:46vh;display:flex;flex-direction:column}
+.gHead{display:flex;align-items:center;gap:6px;padding:6px 10px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--parch-dim);width:100%;text-align:left}
+.gHead .num{margin-left:auto;color:var(--parch)}.gHead .caret{font-size:10px;transition:transform .2s}
+#guildBox.closed .caret{transform:rotate(-90deg)}#guildBox.closed #gList{display:none}
+#gList{display:flex;flex-direction:column;overflow-y:auto;border-top:1px solid var(--line)}
+.gRow{display:flex;align-items:center;gap:7px;padding:5px 8px 5px 8px;border-left:3px solid var(--gc,#7cc4ff)}
+.gRow+.gRow{border-top:1px solid rgba(243,230,196,.08)}
+.gRow img{width:26px;height:16px;border-radius:2px;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+.gRow .gn{flex:1;min-width:0;font-size:12.5px;font-weight:800;color:var(--gc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gRow .gn small{display:block;font-size:10px;font-weight:600;color:var(--parch-dim)}
+.gRow.mine{background:rgba(255,255,255,.05)}
+.gBtn{flex:none;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:800;background:rgba(124,196,255,.16);border:1px solid rgba(124,196,255,.5);color:var(--parch)}
+.gBtn.warn{background:rgba(212,85,63,.18);border-color:rgba(212,85,63,.6)}.gBtn.ok{background:rgba(134,214,143,.2);border-color:rgba(134,214,143,.6)}
+.gBtn:disabled{opacity:.55;cursor:default}
+.gReq{display:flex;align-items:center;gap:6px;padding:5px 8px;font-size:11.5px;background:rgba(227,173,75,.1);border-top:1px solid rgba(227,173,75,.3)}
+.gReq .rq{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.gReq b{color:#ffe08a}
+.gEmpty{padding:7px 9px;font-size:11.5px;color:var(--parch-dim);line-height:1.35}
+.setupRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.guildStart{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--parch-dim)}
+.guildStart img{width:30px;height:19px;border-radius:2px}.guildStart b{color:var(--gc)}
+.customBox{display:flex;flex-direction:column;gap:7px;padding:9px 10px;border-radius:6px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
+.cuRow{display:flex;gap:10px;align-items:center}.cuRow>span{width:52px;flex:none;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--parch-dim)}
+.sw{display:flex;gap:5px;flex-wrap:wrap}
+.sw button{width:26px;height:26px;border-radius:5px;border:2px solid rgba(255,255,255,.18);padding:0;overflow:hidden;display:grid;place-items:center;background:#222}
+.sw button img{width:100%;height:100%;object-fit:cover}
+.sw button.on{border-color:#ffe08a;box-shadow:0 0 0 2px rgba(255,224,138,.35)}
+#menuPanel{background:rgba(4,12,18,.72);align-items:center;justify-content:center;padding:12px;z-index:4}
+.mp{width:min(320px,100%);padding:16px;display:flex;flex-direction:column;gap:10px;align-items:stretch}
+.mp h3{margin:0;font-family:var(--display);font-weight:400;font-size:26px}
+.mp .btnMain{align-self:stretch;text-align:center}.mp .chip2{padding:11px 14px;font-size:15px}.mp .chip2:disabled{opacity:.45;cursor:default}
+.mp p{margin:0;font-size:12.5px;line-height:1.4;color:var(--parch-dim)}.mp .mKeys{font-size:11px;opacity:.8}
+#guildForm{background:rgba(4,12,18,.8);align-items:center;justify-content:center;padding:12px;z-index:5;overflow-y:auto}
+.gf{width:min(420px,100%);padding:16px;display:flex;flex-direction:column;gap:8px;margin-block:auto}
+.gf h3{margin:0;font-family:var(--display);font-weight:400;font-size:24px}
+.gf label,.gfl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--parch-dim)}
+#gName{padding:9px 11px;border-radius:5px;border:1px solid var(--line);background:rgba(0,0,0,.35);color:var(--parch);font-family:var(--ui);font-size:15px;font-weight:700}
+.gf .sw button{width:30px;height:30px}
+.gfPrev{display:flex;align-items:center;gap:10px;padding:8px;border-radius:6px;background:rgba(255,255,255,.05)}
+.gfPrev img{width:48px;height:30px;border-radius:3px}.gfPrev span{font-weight:800;font-size:16px}
+.gfBtns{display:flex;gap:10px;justify-content:flex-end;align-items:center;margin-top:4px}.gfBtns .btnMain{align-self:auto;padding:10px 18px;font-size:15px}
+.hb.rival .nm{color:var(--gc,var(--rival))}.hb.rival .bar i{background:var(--gc,linear-gradient(#a9dcff,#3b8fd6))}
+.hb.rival.ally .bar{border-color:rgba(134,214,143,.7)}
+.selfTag{color:var(--gc,#ffe08a)}
 html,body{height:100%;overflow:hidden;background:#0b2130;color:var(--parch);font-family:var(--ui);-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 #app{position:fixed;inset:0;touch-action:none}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -69,7 +112,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 #hud{position:absolute;inset:0;pointer-events:none}
 #hud > *{pointer-events:auto}
 .card{background:var(--ink);border:1px solid var(--line);border-radius:6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 6px 18px rgba(0,0,0,.25)}
-#shipCard{position:absolute;left:calc(10px + env(safe-area-inset-left,0px));top:calc(10px + env(safe-area-inset-top,0px));width:224px;padding:9px 11px 10px;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+#leftCol{position:absolute;left:calc(10px + env(safe-area-inset-left,0px));top:calc(10px + env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:6px;pointer-events:none!important;width:224px}
+#shipCard{position:relative;width:100%;padding:9px 11px 10px;display:flex;flex-direction:column;gap:6px;pointer-events:none}
 .sc-top{display:flex;align-items:baseline;gap:8px}
 .sc-lv{font-family:var(--display);font-size:22px;line-height:1;color:var(--brass)}
 .sc-cls{font-family:var(--display);font-size:17px;line-height:1}
@@ -244,7 +288,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 #rotate{position:absolute;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:8px 14px;border-radius:5px;font-size:13px;white-space:nowrap;pointer-events:none}
 @media (orientation:landscape){#rotate{display:none}}
 @media (max-height:500px){
-  #shipCard{width:156px;padding:6px 8px;gap:4px;border-radius:5px}
+  #leftCol{width:156px;top:calc(6px + env(safe-area-inset-top,0px));gap:4px}#shipCard{padding:6px 8px;gap:4px;border-radius:5px}
+  #guildBox{max-height:38vh}.gHead{padding:4px 8px;font-size:9.5px}.gRow{padding:4px 6px;gap:5px}.gRow img{width:20px;height:13px}.gRow .gn{font-size:10.5px}.gRow .gn small{font-size:8.5px}.gBtn{padding:3px 6px;font-size:9.5px}.gReq{font-size:10px;padding:4px 6px}.gEmpty{font-size:10px;padding:5px 7px}
   .sc-top{gap:6px}.sc-lv{font-size:15px}.sc-cls{font-size:13px}.sc-cls small{display:none}
   .hp{height:11px}.hp span{font-size:8.5px}
   .gold{gap:5px}.gold svg{width:15px;height:15px}.gold b{font-size:14px}.gold small{display:none}
@@ -269,7 +314,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
   .st h1{font-size:44px}.st ul{display:none}
 }
 @media (max-width:560px) and (orientation:portrait){
-  #shipCard{width:172px}
+  #leftCol{width:172px}
   .stats{display:none}
   #portPanel{width:100%;top:auto;max-height:70%;border-left:0;border-top:1px solid var(--line)}
 }
@@ -284,6 +329,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
   <div id="touch"></div>
   <div id="labels"></div>
   <div id="hud" hidden>
+    <div id="leftCol">
     <div id="shipCard" class="card">
       <div class="sc-top"><span class="sc-lv num" id="hLvl">Sv 1</span><span class="sc-cls" id="hCls">Şalupa</span></div>
       <div class="hp" id="hHpW"><i id="hHp"></i><span class="num" id="hHpT">100 / 100</span></div>
@@ -299,9 +345,12 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
         <div><span>Hasar</span><b class="num" id="sDm">8</b></div>
       </div>
     </div>
+    <div id="guildBox" class="card"><button id="gHead" class="gHead"><span>Loncalar</span><span id="gCount" class="num"></span><span class="caret">▾</span></button><div id="gList"></div></div>
+    </div>
     <div id="zoneTag" class="card"><span id="zName">Sakin Sular</span><small id="zLv">Düşman Sv 1–8</small><span class="wx" id="zWx" hidden>Fırtına</span><small id="zTime"></small></div>
     <canvas id="mini" width="248" height="248" aria-label="Harita"></canvas>
     <div class="iconBtns">
+      <button class="ib" id="btnMenu" aria-label="Menü"><svg viewBox="0 0 24 24" fill="none" stroke="#f3e6c4" stroke-width="2" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button>
       <button class="ib" id="btnMap" aria-label="Haritayı aç"><svg viewBox="0 0 24 24" fill="none" stroke="#f3e6c4" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/></svg></button>
       <button class="ib" id="btnMus" aria-label="Müzik ayarları"><svg viewBox="0 0 24 24" fill="none" stroke="#f3e6c4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg></button>
       <button class="ib" id="btnSnd" aria-label="Efekt seslerini aç/kapat"><svg viewBox="0 0 24 24" fill="none" stroke="#f3e6c4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg></button>
@@ -330,6 +379,25 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
 
   <div id="portPanel" hidden></div>
   <div id="cards" class="overlay" hidden><div class="cd-wrap"><span class="eyebrow" id="cdEye">Seviye 10 ödülü</span><h2>Bir ulti kartı seç</h2><div class="cd-row" id="cdRow"></div><p>Seçtiğin kart kalıcıdır, diğer ikisi kaybolur. Ultiler sağ alttaki düğmelerden ya da 1–5 tuşlarıyla kullanılır.</p></div></div>
+  <div id="menuPanel" class="overlay" hidden>
+    <div class="mp card">
+      <h3>Menü</h3>
+      <button class="btnMain" id="mResume">Devam et</button>
+      <button class="chip2" id="mLobby">Lobiye dön</button>
+      <p id="mHint"></p>
+      <p class="mKeys">Esc menüyü açar ve kapatır · M harita · E limana yanaş</p>
+    </div>
+  </div>
+  <div id="guildForm" class="overlay" hidden>
+    <div class="gf card">
+      <h3>Lonca kur</h3>
+      <label for="gName">Lonca adı</label><input id="gName" maxlength="14" autocomplete="off" spellcheck="false" placeholder="Örn. Kara Martılar">
+      <span class="gfl">Lonca rengi</span><div class="sw" id="gfCol"></div>
+      <span class="gfl">Sancak deseni</span><div class="sw" id="gfEmb"></div>
+      <div class="gfPrev"><img id="gfPrev" alt=""><span id="gfPrevName"></span></div>
+      <div class="gfBtns"><button class="chip2 ghost" id="gfCancel">Vazgeç</button><button class="btnMain" id="gfOk">Loncayı kur</button></div>
+    </div>
+  </div>
   <div id="mapPanel" class="overlay" hidden><canvas id="bigmap" width="900" height="900"></canvas><p>Kapatmak için dokun ya da M · beyaz ok sensin, kesikli çizgi rotan · koyu halkalar fırtına · yeşil noktalar liman</p></div>
   <div id="death" class="overlay" hidden>
     <div class="dt">
@@ -351,6 +419,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
         <li><b>Batarsan</b>Gemideki ganimet kaybolur, seviye kalır</li>
       </ul>
       <div class="nickRow"><label for="nickIn">Kaptan adın</label><input id="nickIn" maxlength="16" autocomplete="off" spellcheck="false"></div>
+      <div class="setupRow"><button class="chip2" id="btnCustom">Gemini özelleştir</button><span id="guildStart" class="guildStart"></span></div>
+      <div id="customBox" class="customBox" hidden>
+        <div class="cuRow"><span>Gövde</span><div class="sw" id="swHull"></div></div>
+        <div class="cuRow"><span>Yelken</span><div class="sw" id="swSail"></div></div>
+        <div class="cuRow"><span>Bayrak</span><div class="sw" id="swFlag"></div></div>
+        <div class="cuRow"><span>Desen</span><div class="sw" id="swEmb"></div></div>
+      </div>
       <div class="lobby" id="lobbyInfo">Çevrimiçi lobiye bağlanılıyor…</div>
       <div id="p2pBox" class="p2p" hidden>
         <div id="p2pCtl" class="p2pRow"><button class="chip2" id="btnHost">Oda aç</button><span class="or">ya da</span><input id="codeIn" maxlength="7" placeholder="KOD" autocomplete="off" spellcheck="false" aria-label="Oda kodu"><button class="chip2" id="btnJoin">Katıl</button></div>
@@ -389,7 +464,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 
 /* ================= SAVE ================= */
 const SAVE_KEY='kayip-okyanus-v1';
-let save={level:1,up:{s:0,h:0,r:0,d:0},spent:0,disc:{},sunk:0,ultis:[],offer:null,nick:''};
+let save={level:1,up:{s:0,h:0,r:0,d:0},spent:0,disc:{},sunk:0,ultis:[],offer:null,nick:'',custom:[1,0,0,0],guild:null};
 try{const s=JSON.parse(localStorage.getItem(SAVE_KEY));if(s&&s.level){save=Object.assign(save,s);save.up=Object.assign({s:0,h:0,r:0,d:0},s.up||{});save.disc=s.disc||{};save.ultis=Array.isArray(s.ultis)?s.ultis:[];}}catch(e){}
 function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}catch(e){}}
 const lsGet=(k,d)=>{try{const v=localStorage.getItem(SAVE_KEY+'-'+k);return v===null?d:v;}catch(e){return d;}};
@@ -628,7 +703,51 @@ function flagTexture(kind){
   g.fillRect(58,49,2,5);g.fillRect(63,49,2,5);g.fillRect(68,49,2,5);
   return new THREE.CanvasTexture(c);
 }
-const flagMats={};['player','enemy','rival'].forEach(k=>{flagMats[k]=new THREE.MeshPhongMaterial({map:flagTexture(k),side:THREE.DoubleSide,shininess:1});flagMats[k].userData.shared=true;});
+const CUST={
+  hull:[0x5a3a22,0x7a4c2a,0x2c2627,0x7a2a22,0x23344f,0x2f4a2e,0xb9a37e,0x2a5a5c,0x4a2c48,0x8a6a2c],
+  sail:[0xece0c4,0xf7f6f1,0x2a292f,0x962e25,0x2d3d63,0x3d5a3a,0xd8b04a,0x5b3a6e,0x8a8a86,0x3f8a88],
+  flag:[0x121315,0x8e1d1d,0x1c2b52,0x1f4a2a,0x4a2160,0xeeeae0,0xc99a2e,0x1c5a5a,0x5a3a22,0x55585e],
+  emb:['Kurukafa','Kartal','Kılıçlar','Çapa','Kraken','Kurt','Yılan','Pusula','Kum saati','Üç dişli']};
+const GCOL=['#ff5a4e','#ff9a3c','#ffd23f','#9be15d','#3fbf6f','#33c6c0','#5ab8ff','#4f6dff','#a66bff','#ff6fb5'];
+const hex6=n=>'#'+n.toString(16).padStart(6,'0');
+const lum=n=>{const r=(n>>16)&255,g=(n>>8)&255,b=n&255;return(0.299*r+0.587*g+0.114*b)/255;};
+// emblems are drawn in a 128x80 box (flag proportions)
+function drawEmblem(g,i,col,bg){
+  g.save();g.fillStyle=col;g.strokeStyle=col;g.lineCap='round';g.lineJoin='round';
+  const P=(pts)=>{g.beginPath();pts.forEach((q,k)=>k?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]));g.closePath();g.fill();};
+  switch(i){
+  case 0:g.lineWidth=7;g.beginPath();g.moveTo(40,58);g.lineTo(88,72);g.moveTo(88,58);g.lineTo(40,72);g.stroke();g.beginPath();g.arc(64,33,17,0,7);g.fill();g.fillRect(55,40,18,13);
+    g.fillStyle=bg;g.beginPath();g.arc(57,32,4.6,0,7);g.arc(71,32,4.6,0,7);g.fill();P([[64,38],[61,44],[67,44]]);g.fillRect(58,48,2,5);g.fillRect(63,48,2,5);g.fillRect(68,48,2,5);break;
+  case 1:P([[64,22],[70,30],[66,32],[74,40],[100,24],[112,30],[96,44],[106,46],[86,54],[72,54],[68,66],[64,72],[60,66],[56,54],[42,54],[22,46],[32,44],[16,30],[28,24],[54,40],[62,32],[58,30]]);
+    g.fillStyle=bg;g.beginPath();g.arc(63,27,1.8,0,7);g.fill();g.fillStyle=col;P([[68,26],[75,29],[68,31]]);break;
+  case 2:g.lineWidth=5;g.beginPath();g.moveTo(36,66);g.lineTo(90,16);g.moveTo(92,66);g.lineTo(38,16);g.stroke();g.lineWidth=6;g.beginPath();g.moveTo(32,54);g.lineTo(46,68);g.moveTo(96,54);g.lineTo(82,68);g.stroke();
+    g.beginPath();g.arc(32,70,4,0,7);g.arc(96,70,4,0,7);g.fill();break;
+  case 3:g.lineWidth=6;g.beginPath();g.arc(64,16,6,0,7);g.stroke();g.fillRect(61,21,6,44);g.fillRect(48,28,32,5);g.beginPath();g.arc(64,46,22,0.15*Math.PI,0.85*Math.PI);g.stroke();
+    P([[41,48],[36,60],[48,56]]);P([[87,48],[92,60],[80,56]]);break;
+  case 4:g.beginPath();g.ellipse(64,28,16,14,0,0,7);g.fill();g.lineWidth=5;for(let k=0;k<6;k++){const a=0.15+k*0.14;const x0=52+k*4.8;g.beginPath();g.moveTo(x0,38);g.bezierCurveTo(x0+(k-2.5)*6,52,x0-(k-2.5)*10,60,x0+(k-2.5)*12,72);g.stroke();}
+    g.fillStyle=bg;g.beginPath();g.arc(58,28,3.5,0,7);g.arc(70,28,3.5,0,7);g.fill();break;
+  case 5:P([[42,14],[54,30],[74,30],[86,14],[88,38],[80,52],[70,58],[64,70],[58,58],[48,52],[40,38]]);g.fillStyle=bg;P([[50,38],[59,41],[52,44]]);P([[78,38],[69,41],[76,44]]);g.beginPath();g.arc(64,60,3,0,7);g.fill();break;
+  case 6:g.lineWidth=9;g.beginPath();g.moveTo(34,66);g.bezierCurveTo(20,40,58,40,64,40);g.bezierCurveTo(70,40,108,40,94,16);g.stroke();g.beginPath();g.ellipse(96,14,8,6,0.5,0,7);g.fill();
+    g.lineWidth=2;g.beginPath();g.moveTo(102,9);g.lineTo(110,4);g.moveTo(102,9);g.lineTo(111,10);g.stroke();g.fillStyle=bg;g.beginPath();g.arc(97,12,1.6,0,7);g.fill();break;
+  case 7:{const pts=[];for(let k=0;k<16;k++){const a=k/16*Math.PI*2-Math.PI/2;const r=k%4===0?30:k%2===0?16:8;pts.push([64+Math.cos(a)*r,40+Math.sin(a)*r]);}P(pts);g.fillStyle=bg;g.beginPath();g.arc(64,40,4,0,7);g.fill();break;}
+  case 8:g.fillRect(44,10,40,6);g.fillRect(44,64,40,6);P([[48,16],[80,16],[66,40],[80,64],[48,64],[62,40]]);g.fillStyle=bg;P([[55,22],[73,22],[64,34]]);break;
+  case 9:g.fillRect(61,30,6,44);g.lineWidth=5;g.beginPath();g.moveTo(44,24);g.lineTo(44,38);g.quadraticCurveTo(44,44,64,44);g.quadraticCurveTo(84,44,84,38);g.lineTo(84,24);g.stroke();
+    P([[64,6],[70,22],[58,22]]);P([[44,12],[49,26],[39,26]]);P([[84,12],[89,26],[79,26]]);g.fillRect(61,22,6,10);break;}
+  g.restore();
+}
+const _embCache=new Map();
+function emblemURL(i,colCss,bgCss,w,h){const k=[i,colCss,bgCss,w,h].join('|');let u=_embCache.get(k);if(u)return u;const c=document.createElement('canvas');c.width=128;c.height=80;const g=c.getContext('2d');g.fillStyle=bgCss;g.fillRect(0,0,128,80);drawEmblem(g,i,colCss,bgCss);u=c.toDataURL();_embCache.set(k,u);return u;}
+const flagMats={};
+function flagMatFor(fc,em){const key='c'+fc+'_'+em;if(flagMats[key])return key;const c=document.createElement('canvas');c.width=128;c.height=80;const g=c.getContext('2d');const bg=CUST.flag[fc];const bgc=hex6(bg);
+  g.fillStyle=bgc;g.fillRect(0,0,128,80);const fg=lum(bg)>0.55?'#1a1714':'#f2ead6';drawEmblem(g,em,fg,bgc);g.fillStyle='rgba(0,0,0,.18)';g.fillRect(0,0,6,80);
+  const m=new THREE.MeshPhongMaterial({map:new THREE.CanvasTexture(c),side:THREE.DoubleSide,shininess:1});m.userData.shared=true;flagMats[key]=m;return key;}
+const _palCache=new Map();
+function validCu(a){return Array.isArray(a)&&a.length===4&&a.every((v,i)=>Number.isInteger(v)&&v>=0&&v<10);}
+function customPal(cu){if(!validCu(cu))cu=[1,0,0,0];const key=cu.join(',');let p=_palCache.get(key);if(p)return p;
+  const H=new THREE.Color(CUST.hull[cu[0]]),S=new THREE.Color(CUST.sail[cu[1]]);
+  p={bottom:0x2b2018,hull:H.getHex(),stripe:0xb8862c,deck:0xa98257,castle:H.clone().multiplyScalar(0.78).getHex(),sail:S.getHex(),sail2:S.clone().multiplyScalar(0.9).getHex(),flag:flagMatFor(cu[2],cu[3]),mast:0x5a3c24};
+  _palCache.set(key,p);return p;}
+['player','enemy','rival'].forEach(k=>{flagMats[k]=new THREE.MeshPhongMaterial({map:flagTexture(k),side:THREE.DoubleSide,shininess:1});flagMats[k].userData.shared=true;});
 
 /* ================= SHIPS ================= */
 const SHIP_TIERS=[
@@ -1362,7 +1481,7 @@ let ballI=0;
 function spawnBall(x,y,z,vx,vy,vz,owner,opts){const b=balls[ballI];ballI=(ballI+1)%balls.length;b.alive=true;b.p.set(x,y,z);b.v.set(vx,vy,vz);b.owner=owner;b.dmg=owner.dmg*(opts.mult||1);b.t=0;b.o=opts;b.hit.clear();}
 function hitTest(sh,p){const dx=p.x-sh.pos.x,dz=p.z-sh.pos.z;const s=Math.sin(sh.heading),c=Math.cos(sh.heading);const f=dx*s+dz*c,lx=dx*c-dz*s;return Math.abs(f)<sh.L*0.5&&Math.abs(lx)<sh.W*0.56&&p.y<sh.H*0.6+2.2&&p.y>-1.6;}
 let TG=null;
-function playerTargets(){if(TG)return TG;const out=[];TG=out;for(const e of enemies)if(e.alive&&!e.sinking)out.push(e);for(const g of ghosts.values())if(g.alive&&!g.sinking&&!g.safe&&!g.ghostOn)out.push(g);return out;}
+function playerTargets(){if(TG)return TG;const out=[];TG=out;for(const e of enemies)if(e.alive&&!e.sinking)out.push(e);for(const g of ghosts.values())if(g.alive&&!g.sinking&&!g.safe&&!g.ghostOn&&!isAlly(g))out.push(g);return out;}
 function updateBalls(dt){
   for(let i=0;i<balls.length;i++){const b=balls[i];if(!b.alive)continue;
     b.t+=dt;b.v.y-=b.o.grav*dt;b.p.addScaledVector(b.v,dt);
@@ -1752,7 +1871,8 @@ function netEvent(arr){if(!NET.room)return;NET.evId++;NET.ev.push([arr[0],NET.ev
 function sanitizeNick(s){return String(s||'').replace(/[\u0000-\u001f\u007f-\u009f​-‏‪-‮⁠-⁯﻿]/g,'').trim().slice(0,16);}
 function netPresence(){
   if(!NET.room)return;
-  const base={v:playing?1:0,n:nick};
+  const base={v:playing?1:0,n:nick,cu:validCu(save.custom)?save.custom:[1,0,0,0]};
+  if(save.guild)Object.assign(base,{g:save.guild.id,gn:save.guild.name,gc:save.guild.c,ge:save.guild.e,gl:save.guild.leader?1:0});
   if(playing&&player){Object.assign(base,{x:Math.round(player.pos.x*10)/10,z:Math.round(player.pos.z*10)/10,h:Math.round(player.heading*1000)/1000,sp:Math.round(player.speed*10)/10,hp:Math.max(0,Math.round(player.hp)),mh:player.maxHp,lv:save.level,ti:player.tier,al:player.alive?1:0,sf:(currentPort||portOpen)?1:0,gh:U.ghostT>0?1:0,ev:NET.ev});}
   NET.room.presence(cleanJSON(base)).then(()=>{if(NET.presErr){NET.presErr='';renderLobby();}}).catch(e=>{const c=e&&e.code||'err';if(NET.presErr!==c){NET.presErr=c;renderLobby();}});
 }
@@ -1849,15 +1969,71 @@ function renderP2P(){
     el.innerHTML=(P2P.isHost?'Odan açık. Kodu arkadaşlarına gönder; açık kaldığı sürece oda yaşar.':'<b>'+esc(c)+'</b> odasındasın.')+(others.length?' Denizdeki kaptanlar: '+names.map(esc).join(', ')+'.':' Şimdilik başka kaptan yok.');
     on.innerHTML=`<span class="on">Oda ${esc(c)} · ${others.length+1} kaptan</span>`;}
 }
+/* ---------- guilds (loncalar): state lives in each captain's presence, the leader approves joins ---------- */
+const GUILD={req:new Map(),pending:null,pendT:0,open:true,renderT:0};
+function cleanName(s){return sanitizeNick(s).slice(0,14);}
+function readGuild(pr){if(!pr||typeof pr.g!=='string'||!/^[a-z0-9]{4,12}$/.test(pr.g))return null;const c=Number.isInteger(pr.gc)&&pr.gc>=0&&pr.gc<10?pr.gc:6,e=Number.isInteger(pr.ge)&&pr.ge>=0&&pr.ge<10?pr.ge:0;return{id:pr.g,name:cleanName(pr.gn)||'Lonca',c,e,leader:pr.gl===1};}
+function isAlly(g){return !!(save.guild&&g&&g.gid&&g.gid===save.guild.id);}
+function guildFlagURL(c,e){return emblemURL(e,'#f2ead6',GCOL[c],128,80);}
+function guildList(){
+  const map=new Map();const add=(peer,nk,gi,me)=>{if(!gi)return;let G=map.get(gi.id);if(!G){G={id:gi.id,name:gi.name,c:gi.c,e:gi.e,members:[],leaderPeer:null};map.set(gi.id,G);}
+    G.members.push({peer,nick:nk,leader:gi.leader,me});if(gi.leader){G.leaderPeer=peer;G.name=gi.name;G.c=gi.c;G.e=gi.e;}};
+  if(save.guild)add(NET.myPeer||'me',nick,{id:save.guild.id,name:save.guild.name,c:save.guild.c,e:save.guild.e,leader:!!save.guild.leader},true);
+  for(const p of NET.peers){if(p.sameTab||!p.presence)continue;add(p.peer,sanitizeNick(p.presence.n)||'Adsız kaptan',readGuild(p.presence),false);}
+  return [...map.values()].sort((a,b)=>(b.members.some(m=>m.me)-a.members.some(m=>m.me))||b.members.length-a.members.length);
+}
+function renderGuilds(force,dt){
+  if(!force&&(GUILD.renderT-=(dt||0))>0)return;GUILD.renderT=0.5;
+  const list=guildList();const box=$('gList');$('gCount').textContent=list.length?list.length:'';
+  let h='';
+  if(save.guild&&save.guild.leader)for(const [peer,r] of GUILD.req){h+=`<div class="gReq"><span class="rq"><b>${esc(r.nick)}</b> katılmak istiyor</span><button class="gBtn ok" data-acc="${esc(peer)}">Kabul</button><button class="gBtn warn" data-den="${esc(peer)}">Reddet</button></div>`;}
+  for(const G of list){const mine=save.guild&&G.id===save.guild.id;const pend=GUILD.pending===G.id;
+    const btn=mine?`<button class="gBtn warn" data-leave="1">${save.guild.leader?'Dağıt':'Ayrıl'}</button>`:(G.leaderPeer?`<button class="gBtn" data-join="${esc(G.id)}" ${pend?'disabled':''}>${pend?'İstek gitti':'Katıl'}</button>`:'');
+    h+=`<div class="gRow${mine?' mine':''}" style="--gc:${GCOL[G.c]}"><img src="${guildFlagURL(G.c,G.e)}" alt=""><span class="gn">${esc(G.name)}<small>${G.members.length} kaptan${mine?' · senin loncan':''}</small></span>${btn}</div>`;}
+  if(!list.length)h+=`<div class="gEmpty">${NET.room?'Lobide henüz lonca yok.':'Lonca listesi çevrimiçi odada görünür.'}</div>`;
+  if(!save.guild)h+=`<div class="gEmpty"><button class="gBtn ok" data-create="1">Lonca kur</button></div>`;
+  if(GUILD.lastH!==h){GUILD.lastH=h;box.innerHTML=h;}renderGuildStart();
+}
+function renderGuildStart(){const el=$('guildStart');if(!el)return;const G=save.guild;
+  const h=G?`<img src="${guildFlagURL(G.c,G.e)}" alt=""><span style="--gc:${GCOL[G.c]}">Lonca: <b>${esc(G.name)}</b>${G.leader?' (lider)':''}</span><button class="chip2 ghost" data-leave="1">${G.leader?'Dağıt':'Ayrıl'}</button>`:`<button class="chip2" data-create="1">Lonca kur</button><span>ya da oyunda bir loncaya katıl</span>`;
+  if(GUILD.lastS!==h){GUILD.lastS=h;el.innerHTML=h;}}
+function leaveGuild(){if(!save.guild)return;if(save.guild.leader)netEvent(['gd',save.guild.id]);toast(save.guild.leader?`<b>${esc(save.guild.name)}</b> dağıtıldı`:`<b>${esc(save.guild.name)}</b> loncasından ayrıldın`,null);save.guild=null;GUILD.req.clear();persist();renderGuilds(true);hudDirty=true;}
+function requestJoin(gid){const G=guildList().find(x=>x.id===gid);if(!G||!G.leaderPeer)return;if(save.guild)leaveGuild();GUILD.pending=gid;GUILD.pendT=T;netEvent(['jr',G.leaderPeer,gid]);toast(`<b>${esc(G.name)}</b> liderine katılma isteği gönderildi`,'rival');renderGuilds(true);}
+function guildEvent(g,e){const t=e[0],to=e[2],gid=t==='gd'?e[2]:e[3];
+  if(t==='gd'){if(save.guild&&!save.guild.leader&&save.guild.id===gid){toast(`Lider <b>${esc(save.guild.name)}</b> loncasını dağıttı`,'bad');save.guild=null;persist();hudDirty=true;}renderGuilds(true);return;}
+  if(to!==NET.myPeer)return;
+  if(t==='jr'){if(save.guild&&save.guild.leader&&save.guild.id===gid){GUILD.req.set(g.peer,{nick:g.nick,t:T});GUILD.open=true;$('guildBox').classList.remove('closed');toast(`<b>${esc(g.nick)}</b> loncana katılmak istiyor`,'rival');sfx('coin',0.5);renderGuilds(true);}}
+  else if(t==='ja'){if(GUILD.pending===gid&&g.gid===gid){save.guild={id:gid,name:g.gname,c:g.gc,e:g.ge,leader:false};GUILD.pending=null;persist();toast(`<b>${esc(g.gname)}</b> loncasına katıldın!`,'good');sfx('up',0.7);hudDirty=true;renderGuilds(true);}}
+  else if(t==='jd'){if(GUILD.pending===gid){GUILD.pending=null;toast('Katılma isteğin reddedildi','bad');renderGuilds(true);}}
+}
+function answerReq(peer,ok){const r=GUILD.req.get(peer);if(!r||!save.guild)return;GUILD.req.delete(peer);netEvent([ok?'ja':'jd',peer,save.guild.id]);if(ok)toast(`<b>${esc(r.nick)}</b> loncaya alındı`,'good');renderGuilds(true);}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-join],[data-leave],[data-acc],[data-den],[data-create]');if(!b)return;
+  if(b.dataset.join)requestJoin(b.dataset.join);else if(b.dataset.leave)leaveGuild();else if(b.dataset.acc)answerReq(b.dataset.acc,true);else if(b.dataset.den)answerReq(b.dataset.den,false);else if(b.dataset.create)openGuildForm();});
+$('gHead').addEventListener('click',()=>{$('guildBox').classList.toggle('closed');});
+const GF={c:0,e:0};
+function renderGuildForm(){$('gfCol').innerHTML=GCOL.map((c,i)=>`<button data-gc="${i}" class="${i===GF.c?'on':''}" style="background:${c}" aria-label="Renk ${i+1}"></button>`).join('');
+  $('gfEmb').innerHTML=CUST.emb.map((n,i)=>`<button data-ge="${i}" class="${i===GF.e?'on':''}" aria-label="${esc(n)}" title="${esc(n)}"><img src="${emblemURL(i,'#f2ead6',GCOL[GF.c],128,80)}" alt=""></button>`).join('');
+  $('gfPrev').src=guildFlagURL(GF.c,GF.e);$('gfPrevName').textContent=cleanName($('gName').value)||'Lonca adı';$('gfPrevName').style.color=GCOL[GF.c];}
+function openGuildForm(){GF.c=Math.floor(Math.random()*10);GF.e=Math.floor(Math.random()*10);$('gName').value='';renderGuildForm();$('guildForm').hidden=false;setTimeout(()=>$('gName').focus(),50);}
+$('gfCol').addEventListener('click',e=>{const b=e.target.closest('[data-gc]');if(b){GF.c=+b.dataset.gc;renderGuildForm();}});
+$('gfEmb').addEventListener('click',e=>{const b=e.target.closest('[data-ge]');if(b){GF.e=+b.dataset.ge;renderGuildForm();}});
+$('gName').addEventListener('input',()=>{$('gfPrevName').textContent=cleanName($('gName').value)||'Lonca adı';});
+$('gfCancel').addEventListener('click',()=>{$('guildForm').hidden=true;});
+$('gfOk').addEventListener('click',()=>{const n=cleanName($('gName').value);if(n.length<2){$('gName').focus();$('gName').placeholder='En az 2 harf yaz';return;}
+  save.guild={id:Math.random().toString(36).slice(2,10).replace(/[^a-z0-9]/g,'x').padEnd(8,'x'),name:n,c:GF.c,e:GF.e,leader:true};GUILD.pending=null;persist();$('guildForm').hidden=true;toast(`<b>${esc(n)}</b> loncası kuruldu. Diğer kaptanlar listeden katılma isteği gönderebilir.`,'good');hudDirty=true;renderGuilds(true);});
 function handlePeer(p){
   const pr=p.presence||{};let g=ghosts.get(p.peer);
   if(pr.v!==1||typeof pr.x!=='number'||typeof pr.z!=='number'){if(g)removeGhost(p.peer);return;}
   const lv=clamp(Math.round(+pr.lv||1),1,MAXLV),ti=clamp(Math.round(+pr.ti||0),0,4);
-  if(!g){g=new Ship({remote:true,x:pr.x,z:pr.z,level:lv,pal:PAL.rival,heading:+pr.h||0});g.peer=p.peer;g.newTier=ti;g.rebuild();
+  const cu=validCu(pr.cu)?pr.cu:[1,0,0,0];
+  if(!g){g=new Ship({remote:true,x:pr.x,z:pr.z,level:lv,pal:customPal(cu),heading:+pr.h||0});g.cuKey=cu.join(',');g.peer=p.peer;g.newTier=ti;g.rebuild();
     const hb=document.createElement('div');hb.className='hb rival';hb.innerHTML='<div class="nm"></div><div class="bar"><i></i></div>';hb.hidden=true;labels.appendChild(hb);g.hb=hb;g.hbFill=hb.querySelector('i');g.hbName=hb.querySelector('.nm');
     ghosts.set(p.peer,g);const evs=Array.isArray(pr.ev)?pr.ev:[];NET.lastEv.set(p.peer,evs.reduce((m,e)=>Math.max(m,+e[1]||0),0));
     if(playing)toast(`<b>${esc(sanitizeNick(pr.n)||'Bir kaptan')}</b> aynı denize açıldı`,'rival');}
   g.nick=sanitizeNick(pr.n)||'Adsız kaptan';g.level=lv;
+  if(cu.join(',')!==g.cuKey){g.cuKey=cu.join(',');g.pal=customPal(cu);g.newTier=ti;g.rebuild();}
+  const gi=readGuild(pr);g.gid=gi?gi.id:null;g.gname=gi?gi.name:'';g.gc=gi?gi.c:-1;g.ge=gi?gi.e:0;g.gl=!!(gi&&gi.leader);
+  if(g.hb){if(g.gc>=0)g.hb.style.setProperty('--gc',GCOL[g.gc]);else g.hb.style.removeProperty('--gc');g.hb.classList.toggle('ally',isAlly(g));}
   if(ti!==g.tier){g.newTier=ti;g.rebuild();}
   g.tx=pr.x;g.tz=pr.z;g.th=+pr.h||0;g.tsp=+pr.sp||0;g.netT=performance.now()/1000;
   g.maxHp=Math.max(1,+pr.mh||100);g.hp=clamp(+pr.hp||0,0,g.maxHp);g.safe=!!pr.sf;g.ghostOn=!!pr.gh;g.dmg=8+0.9*(lv-1);
@@ -1871,8 +2047,10 @@ function handlePeer(p){
 }
 function applyEvent(g,e){
   const t=e[0];
+  if(t==='jr'||t==='ja'||t==='jd'||t==='gd'){guildEvent(g,e);return;}
   if(t==='h'){const to=e[2],d=clamp(+e[3]||0,0,100000);
     if(to===NET.myPeer&&player.alive){
+      if(isAlly(g))return;
       if(T<player.invulnT||portOpen||U.ghostT>0||inSafe(player.pos.x,player.pos.z))return;
       if(d>0){player.hp-=d;player.lastHit=T;player.lastPeer={peer:g.peer,t:T,nick:g.nick,lv:g.level};_v.set(player.pos.x+rnd(-2,2),player.H,player.pos.z+rnd(-2,2));fxHit(_v);sfx('hit',1);floatText(_v.x,_v.y+2,_v.z,'-'+Math.round(d),'hurt');camShake=Math.min(1,camShake+0.35);hudDirty=true;}
       if(+e[4])ignite(player,4,Math.max(1,+e[7]||player.maxHp*0.02));if(+e[5])player.slowT=Math.max(player.slowT,4);if(+e[6]){player.holdT=Math.max(player.holdT,clamp(+e[6],0,6));player.lastPeer={peer:g.peer,t:T,nick:g.nick,lv:g.level};showRemoteKraken();}
@@ -1908,7 +2086,7 @@ touchEl.addEventListener('pointerup',joyEnd);touchEl.addEventListener('pointerca
 touchEl.addEventListener('wheel',e=>{zoom=clamp(zoom+e.deltaY*0.0008,0.7,1.45);},{passive:true});
 addEventListener('keydown',e=>{if(e.target&&e.target.tagName==='INPUT')return;keys[e.code]=true;if(!playing)return;
   if(e.code==='KeyM')toggleMap();if((e.code==='KeyE'||e.code==='Enter')&&currentPort&&!portOpen&&player.alive)openPort();
-  if(e.code==='Escape'){if(portOpen)closePort();if(!$('mapPanel').hidden)toggleMap();}
+  if(e.code==='Escape'){if(!$('guildForm').hidden)$('guildForm').hidden=true;else if(!$('mapPanel').hidden)toggleMap();else if(portOpen)closePort();else toggleMenu();}
   const m=/^Digit([1-5])$/.exec(e.code);if(m){const k=save.ultis[+m[1]-1];if(k)useUlti(k);}
   if(e.code.startsWith('Key')||e.code.startsWith('Arrow'))$('joyHint').classList.add('gone');});
 addEventListener('keyup',e=>{keys[e.code]=false;});
@@ -1958,8 +2136,8 @@ function placeHB(sh){
 }
 function updateLabels(dt){
   for(const e of enemies){if(!e.alive)continue;if(placeHB(e))e.hb.classList.toggle('danger',e.level>save.level+2);}
-  if(playerTag){_v.set(player.pos.x,player.H+player.L*0.85+2,player.pos.z);if(playing&&player.alive&&NET.room&&project(_v,scr)){playerTag.hidden=false;playerTag.style.transform=`translate(${scr.x}px,${scr.y}px) translate(-50%,-100%)`;if(playerTag.textContent!==nick)playerTag.textContent=nick;}else playerTag.hidden=true;}
-  for(const g of ghosts.values()){if(placeHB(g)){const t=`${g.nick} · Sv ${g.level}`+(g.safe?' · limanda':'');if(g.hbName.textContent!==t)g.hbName.textContent=t;}}
+  if(playerTag){if(save.guild)playerTag.style.setProperty('--gc',GCOL[save.guild.c]);else playerTag.style.removeProperty('--gc');_v.set(player.pos.x,player.H+player.L*0.85+2,player.pos.z);if(playing&&player.alive&&NET.room&&project(_v,scr)){playerTag.hidden=false;playerTag.style.transform=`translate(${scr.x}px,${scr.y}px) translate(-50%,-100%)`;const tt=(save.guild?`[${save.guild.name}] `:'')+nick;if(playerTag.textContent!==tt)playerTag.textContent=tt;}else playerTag.hidden=true;}
+  for(const g of ghosts.values()){if(placeHB(g)){const t=(g.gid?`[${g.gname}] `:'')+`${g.nick} · Sv ${g.level}`+(isAlly(g)?' · müttefik':g.safe?' · limanda':'');if(g.hbName.textContent!==t)g.hbName.textContent=t;}}
   for(const f of ftPool){if(!f.on)continue;f.t+=dt;if(f.t>1.3){f.on=false;f.el.hidden=true;continue;}_v.copy(f.p);_v.y+=f.t*5;if(project(_v,scr)){f.el.style.transform=`translate(${scr.x}px,${scr.y}px) translate(-50%,-50%) scale(${1+Math.max(0,0.3-f.t)})`;f.el.style.opacity=String(1-Math.max(0,f.t-0.8)/0.5);}else f.el.style.opacity='0';}
   for(const p of pois){
     let el=poiLabels.get(p);const d=Math.hypot(p.cx-player.pos.x,p.cz-player.pos.z);
@@ -1977,7 +2155,7 @@ function updateHUD(dt){
   if(hudT>0&&!hudDirty)return;hudT=0.12;hudDirty=false;
   const T_=SHIP_TIERS[player.tier];
   $('hLvl').textContent='Sv '+save.level;$('hCls').innerHTML=T_.name+`<small>${T_.cps} top/borda</small>`;
-  const hp=Math.max(0,Math.ceil(player.hp));$('hHp').style.width=(hp/player.maxHp*100)+'%';$('hHpT').textContent=hp+' / '+player.maxHp;$('hHpW').classList.toggle('low',hp<player.maxHp*0.35);
+  const hp=Math.max(0,Math.ceil(player.hp));$('hHp').style.width=(hp/player.maxHp*100)+'%';$('hHp').style.background=save.guild&&hp>=player.maxHp*0.35?`linear-gradient(${GCOL[save.guild.c]},${GCOL[save.guild.c]}cc)`:'';$('hHpT').textContent=hp+' / '+player.maxHp;$('hHpW').classList.toggle('low',hp<player.maxHp*0.35);
   $('hGold').textContent=carried;
   $('sSpd').textContent=player.speedMax.toFixed(1);$('sHp').textContent=player.maxHp;$('sRl').textContent=player.reload.toFixed(1)+'s';$('sDm').textContent=player.dmg.toFixed(0);
   const st=[];if(player.burnT>0)st.push('<span>Yanıyor</span>');if(player.slowT>0)st.push('<span>Direk hasarlı</span>');if(player.holdT>0)st.push('<span>Kraken</span>');if((player.storm||0)>0.15)st.push('<span>Fırtına</span>');
@@ -2015,7 +2193,7 @@ function drawMini(){
   for(const p of pois){if(p.type==='port'||!p.avail||!save.disc[p.id])continue;const x=R+(p.cx-px)*k,y=R+(p.cz-pz)*k;c.fillStyle='#ffd257';c.beginPath();c.arc(x,y,4,0,7);c.fill();c.strokeStyle='#5a3a10';c.lineWidth=1.5;c.stroke();}
   for(const ch of chests){const x=R+(ch.x-px)*k,y=R+(ch.z-pz)*k;c.fillStyle='#ffe58a';c.fillRect(x-3,y-3,6,6);}
   for(const e of enemies){if(!e.alive)continue;const dx=e.pos.x-px,dz=e.pos.z-pz;if(Math.hypot(dx,dz)>260)continue;c.fillStyle=e.state==='chase'?'#ff5a40':'#d9775f';c.beginPath();c.arc(R+dx*k,R+dz*k,e.state==='chase'?5:4,0,7);c.fill();}
-  for(const g of ghosts.values()){if(!g.alive||g.ghostOn)continue;const x=R+(g.pos.x-px)*k,y=R+(g.pos.z-pz)*k;c.save();c.translate(clamp(x,8,S-8),clamp(y,8,S-8));c.rotate(-g.heading);c.fillStyle='#7cc4ff';c.strokeStyle='#0c2230';c.lineWidth=1.5;c.beginPath();c.moveTo(0,8);c.lineTo(5,-5);c.lineTo(-5,-5);c.closePath();c.fill();c.stroke();c.restore();}
+  for(const g of ghosts.values()){if(!g.alive||g.ghostOn)continue;const x=R+(g.pos.x-px)*k,y=R+(g.pos.z-pz)*k;c.save();c.translate(clamp(x,8,S-8),clamp(y,8,S-8));c.rotate(-g.heading);c.fillStyle=g.gc>=0?GCOL[g.gc]:'#7cc4ff';c.strokeStyle='#0c2230';c.lineWidth=1.5;c.beginPath();c.moveTo(0,8);c.lineTo(5,-5);c.lineTo(-5,-5);c.closePath();c.fill();c.stroke();c.restore();}
   c.translate(R,R);c.rotate(-player.heading);c.fillStyle='#fff6d8';c.strokeStyle='#2a1a08';c.lineWidth=1.5;c.beginPath();c.moveTo(0,9);c.lineTo(5.5,-6);c.lineTo(0,-3);c.lineTo(-5.5,-6);c.closePath();c.fill();c.stroke();
   c.restore();c.fillStyle='rgba(243,230,196,.9)';c.font='bold 18px "Alegreya Sans",sans-serif';c.textAlign='center';c.fillText('K',R,20);
 }
@@ -2117,7 +2295,7 @@ $('btnRespawn').addEventListener('click',respawn);
 function createPlayer(port){
   const a=port.dockA;const d=port.R*1.15+22;
   const lat=12+rnd(-14,14),out=d+rnd(0,14);const x=port.x+Math.cos(a)*out+Math.sin(a)*lat,z=port.z+Math.sin(a)*out-Math.cos(a)*lat;
-  player=new Ship({player:true,x,z,pal:PAL.player,heading:Math.atan2(Math.cos(a),Math.sin(a))});
+  player=new Ship({player:true,x,z,pal:customPal(save.custom),heading:Math.atan2(Math.cos(a),Math.sin(a))});
   player.invulnT=T+3;player.bumpT=-9;player.kbThr=0;player.lastPeer=null;currentPort=null;camInit=false;
   for(const k in U.cd)U.cd[k]=Math.min(U.cd[k],5);
 }
@@ -2306,7 +2484,8 @@ function frame(now){
   lampMat.visible=lampMat.opacity>0.01;
   if(playing){updateHUD(dt);miniT-=dt;if(miniT<=0){miniT=0.1;drawMini();}
     trailT-=dt;if(trailT<=0){trailT=1.5;const l=trail[trail.length-1];if(!l||Math.hypot(l[0]-player.pos.x,l[1]-player.pos.z)>6){trail.push([player.pos.x,player.pos.z]);if(trail.length>60)trail.shift();}}
-    if(!$('mapPanel').hidden){mapT-=dt;if(mapT<=0){mapT=0.12;drawBigMap();}}}
+    if(!$('mapPanel').hidden){mapT-=dt;if(mapT<=0){mapT=0.12;drawBigMap();}}
+    renderGuilds(false,dt);if(GUILD.pending&&T-GUILD.pendT>60){GUILD.pending=null;}}
   if(NET.room&&now-NET.lastSend>100){NET.lastSend=now;netPresence();}
   updateGulls(dt);
   if(composer){gradePass.uniforms.uStorm.value=stormLvl;gradePass.uniforms.uTime.value=T%100;bloomPass.strength=0.42+flashV*0.8;composer.render(dt);}else renderer.render(scene,camera);
@@ -2335,6 +2514,7 @@ function boot(){
   nick=sanitizeNick(save.nick)||('Kaptan '+Math.floor(100+Math.random()*900));$('nickIn').value=nick;
   if(save.level>1||save.spent>0){$('saveInfo').hidden=false;$('saveInfo').textContent=`Kayıtlı ilerleme: Seviye ${save.level} ${SHIP_TIERS[tierOf(save.level)].name} · ${save.spent} altın güvencede`+(save.ultis.length?` · ${save.ultis.length} ulti`:'');}
   if(!matchMedia('(pointer: coarse)').matches)$('joyHintT').textContent='W A S D ile dümen tut ya da fareyle sürükle. M harita, E limana yanaş, 1–5 ultiler. Toplar hedef yan tarafına gelince kendiliğinden ateşlenir.';
+  if(!validCu(save.custom))save.custom=[1,0,0,0];if(save.guild&&!/^[a-z0-9]{4,12}$/.test(save.guild.id||''))save.guild=null;renderGuilds(true);if(innerHeight<500)$('guildBox').classList.add('closed');
   $('btnSnd').classList.toggle('off',!soundOn);renderMusicPanel();renderUltiBar();renderLobby();
   netInit();
   requestAnimationFrame(t=>{last=t;frame(t);});
@@ -2346,12 +2526,32 @@ $('btnLeave').addEventListener('click',()=>{p2pReset();NET.why='';NET.state='idl
 $('btnCopy').addEventListener('click',()=>{const url=location.origin+location.pathname+location.search+'#'+P2P.code;const fb=$('copyFallback');
   const show=()=>{fb.hidden=false;fb.value=url;fb.focus();fb.select();};
   try{navigator.clipboard.writeText(url).then(()=>{$('btnCopy').textContent='Kopyalandı';setTimeout(()=>$('btnCopy').textContent='Davet bağlantısını kopyala',1800);},show);}catch(e){show();}});
+function renderCustom(){const cu=save.custom;
+  $('swHull').innerHTML=CUST.hull.map((c,i)=>`<button data-cu="0:${i}" class="${cu[0]===i?'on':''}" style="background:${hex6(c)}" aria-label="Gövde ${i+1}"></button>`).join('');
+  $('swSail').innerHTML=CUST.sail.map((c,i)=>`<button data-cu="1:${i}" class="${cu[1]===i?'on':''}" style="background:${hex6(c)}" aria-label="Yelken ${i+1}"></button>`).join('');
+  $('swFlag').innerHTML=CUST.flag.map((c,i)=>`<button data-cu="2:${i}" class="${cu[2]===i?'on':''}" style="background:${hex6(c)}" aria-label="Bayrak rengi ${i+1}"></button>`).join('');
+  const fb=CUST.flag[cu[2]];$('swEmb').innerHTML=CUST.emb.map((n,i)=>`<button data-cu="3:${i}" class="${cu[3]===i?'on':''}" title="${esc(n)}" aria-label="${esc(n)}"><img src="${emblemURL(i,lum(fb)>0.55?'#1a1714':'#f2ead6',hex6(fb),128,80)}" alt=""></button>`).join('');}
+$('btnCustom').addEventListener('click',()=>{const b=$('customBox');b.hidden=!b.hidden;if(!b.hidden)renderCustom();});
+$('customBox').addEventListener('click',e=>{const b=e.target.closest('[data-cu]');if(!b)return;const [k,v]=b.dataset.cu.split(':').map(Number);const cu=save.custom.slice();cu[k]=v;save.custom=cu;persist();
+  player.pal=customPal(cu);player.rebuild();renderCustom();});
 $('nickIn').addEventListener('input',e=>{nick=sanitizeNick(e.target.value)||nick;save.nick=nick;persist();});
+let startedOnce=false;
+function toggleMenu(force){const m=$('menuPanel');const open=force===undefined?m.hidden:force;m.hidden=!open;if(!open)return;
+  const ok=!!(player.alive&&inSafe(player.pos.x,player.pos.z));$('mLobby').disabled=!ok;
+  $('mHint').textContent=ok?'Lobide gemini özelleştirebilir, loncanı değiştirebilir ve odaya katılabilirsin. Gemin limanda bekler.':(player.alive?'Lobiye yalnızca güvenli limandayken dönebilirsin. Önce bir limanın sarı halkasının içine gir.':'Önce limanda yeniden doğmalısın.');}
+function returnToLobby(){if(!player.alive||!inSafe(player.pos.x,player.pos.z))return;
+  closePort();$('menuPanel').hidden=true;$('mapPanel').hidden=true;$('musicPanel').hidden=true;$('disc').hidden=false;
+  playing=false;joy.active=false;joy.x=joy.y=0;$('joy').classList.remove('on');for(const k in keys)keys[k]=false;player.kbThr=0;player.speed=0;
+  $('hud').hidden=true;$('start').hidden=false;$('btnStart').textContent='Denize dön';camInit=false;
+  $('saveInfo').hidden=false;$('saveInfo').textContent=`Seviye ${save.level} ${SHIP_TIERS[tierOf(save.level)].name} · gemide ${carried} altın · ${currentPort?currentPort.name:'limanda'} bekliyor`;
+  renderLobby();renderGuilds(true);if(!$('customBox').hidden)renderCustom();}
+$('btnMenu').addEventListener('click',()=>toggleMenu());$('mResume').addEventListener('click',()=>toggleMenu(false));$('mLobby').addEventListener('click',returnToLobby);
+$('menuPanel').addEventListener('click',e=>{if(e.target.id==='menuPanel')toggleMenu(false);});
 $('btnStart').addEventListener('click',()=>{
   nick=sanitizeNick($('nickIn').value)||nick;save.nick=nick;persist();
   audioInit();if(MUS.pendingCustom){loadCustomFromBuffer(MUS.pendingCustom.data,MUS.pendingCustom.name).catch(()=>{});MUS.pendingCustom=null;}if(MUS.pendingFight){const pf=MUS.pendingFight;loadFightFromBuffer(pf.data,pf.name).then(()=>{MUS.pendingFight=null;}).catch(()=>{});}
   $('start').hidden=true;$('hud').hidden=false;playing=true;camInit=false;hudDirty=true;
-  setTimeout(()=>toast('Ufukta batıklar ve harabeler var. Ganimeti topla, batmadan limana dön.',null),600);
+  if(!startedOnce)setTimeout(()=>toast('Ufukta batıklar ve harabeler var. Ganimeti topla, batmadan limana dön.',null),600);startedOnce=true;
   if(pendingPicks()>0)setTimeout(()=>toast('Bekleyen bir <b>ulti kartın</b> var; bir limana yanaş ve seç','good'),2500);
 });
 $('btnSnd').addEventListener('click',()=>{soundOn=!soundOn;audioInit();if(AU.master)AU.master.gain.value=soundOn?0.7:0;$('btnSnd').classList.toggle('off',!soundOn);lsSet('snd',soundOn?'1':'0');});
