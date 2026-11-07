@@ -315,9 +315,32 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
   .lvCard{padding:8px 10px}.statRow{padding:6px 0}
   .st h1{font-size:44px}.st ul{display:none}
 }
-@media (max-width:560px) and (orientation:portrait){
-  #leftCol{width:172px}
+@media (max-width:600px) and (orientation:portrait){
+  #leftCol{width:132px;left:calc(6px + env(safe-area-inset-left,0px));top:calc(6px + env(safe-area-inset-top,0px));gap:3px}#shipCard{padding:5px 6px;gap:3px;border-radius:5px}
+  #guildBox{max-height:24vh}.gHead{padding:3px 6px;font-size:8.5px}.gRow{padding:3px 5px;gap:4px}.gRow img{width:16px;height:11px}.gRow .gn{font-size:9.5px}.gRow .gn small{font-size:7.5px}.gBtn{padding:2px 5px;font-size:8.5px}.gReq{font-size:9px;padding:3px 5px}.gEmpty{font-size:9px;padding:4px 6px}
+  .sc-top{gap:5px}.sc-lv{font-size:13px}.sc-cls{font-size:11px}.sc-cls small{display:none}
+  .hp{height:9px}.hp span{font-size:7.5px}
+  .gold{gap:4px}.gold svg{width:13px;height:13px}.gold b{font-size:12px}.gold small{display:none}
+  .status span{font-size:7.5px;padding:1px 3px}
   .stats{display:none}
+  #zoneTag{font-size:10.5px;padding:2px 8px;gap:5px;top:auto;bottom:calc(8px + env(safe-area-inset-bottom,0px))}#zoneTag small{display:none}
+  #mini{width:72px;height:72px;border-width:2px;top:calc(6px + env(safe-area-inset-top,0px));right:calc(6px + env(safe-area-inset-right,0px))}
+  .iconBtns{top:calc(84px + env(safe-area-inset-top,0px));right:calc(6px + env(safe-area-inset-right,0px));gap:4px}.ib{width:26px;height:26px}.ib svg{width:13px;height:13px}
+  #disc,#musicPanel{top:calc(116px + env(safe-area-inset-top,0px))}#disc{font-size:9px;width:118px}
+  #musicPanel{width:min(220px,62vw);padding:8px;gap:5px}#musicPanel h4{font-size:13px}#musicPanel p{font-size:10px}.chip{padding:4px 7px;font-size:10.5px}
+  #toasts{top:calc(6px + env(safe-area-inset-top,0px));width:min(190px,46vw);gap:3px}
+  .toast{font-size:10.5px;padding:3px 8px;border-radius:4px}.toast:nth-child(n+3){display:none}
+  #zoneBig h2{font-size:24px}#zoneBig p{font-size:10.5px}
+  .ub{width:38px;height:38px}.ub svg{width:18px;height:18px}.ub .cdv{font-size:11px}
+  #ultis{bottom:calc(40px + env(safe-area-inset-bottom,0px));gap:5px;right:calc(8px + env(safe-area-inset-right,0px))}
+  #bside{right:calc(8px + env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+  .bs{width:52px;height:22px;font-size:8.5px}
+  #btnPort{font-size:12px;padding:7px 11px;bottom:calc(84px + env(safe-area-inset-bottom,0px))}#btnPort svg{width:15px;height:15px}
+  #joyHint .ring{width:42px;height:42px}#joyHint p{font-size:10px;max-width:140px}
+  .hb .nm{font-size:8.5px}.hb .bar{width:40px;height:5px}.hb.rival .nm{font-size:9.5px}.selfTag{font-size:9.5px}
+  .poi{font-size:8.5px;padding:2px 4px}.ft{font-size:11.5px}.ft.gold{font-size:13px}
+  #onlineT{font-size:9px!important}
+  #rotate{display:none}
   #portPanel{width:100%;top:auto;max-height:70%;border-left:0;border-top:1px solid var(--line)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -387,7 +410,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
       <button class="btnMain" id="mResume">Devam et</button>
       <button class="chip2" id="mLobby">Lobiye dön</button>
       <p id="mHint"></p>
-      <p class="mKeys">Esc menüyü açar ve kapatır · M harita · E limana yanaş · Sürüm 19</p>
+      <p class="mKeys">Esc menüyü açar ve kapatır · M harita · E limana yanaş · Sürüm 20</p>
     </div>
   </div>
   <div id="guildForm" class="overlay" hidden>
@@ -437,7 +460,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
       </div>
       <span class="saveInfo" id="saveInfo" hidden></span>
       <button class="btnMain" id="btnStart">Denize açıl</button>
-      <span class="build">Sürüm 19 · lonca renkleri ve sancakları</span>
+      <span class="build">Sürüm 20 · dikey ekran + akıcı online</span>
     </div>
   </div>
 </div>
@@ -1493,10 +1516,12 @@ let TG=null;
 function playerTargets(){if(TG)return TG;const out=[];TG=out;for(const e of enemies)if(e.alive&&!e.sinking)out.push(e);for(const g of ghosts.values())if(g.alive&&!g.sinking&&!g.safe&&!g.ghostOn&&!isAlly(g))out.push(g);return out;}
 function updateBalls(dt){
   for(let i=0;i<balls.length;i++){const b=balls[i];if(!b.alive)continue;
-    b.t+=dt;b.v.y-=b.o.grav*dt;b.p.addScaledVector(b.v,dt);
+    // sub-steps so fast balls can't skip through a hull when the frame rate is low
+    const nSub=Math.min(8,Math.max(1,Math.ceil(b.v.length()*dt/1.6)));const sdt=dt/nSub;let done=false;
+    for(let sub=0;sub<nSub&&!done;sub++){
+    b.t+=sdt;b.v.y-=b.o.grav*sdt;b.p.addScaledVector(b.v,sdt);
     if(b.o.sonic)glow.spawn(b.p.x,b.p.y,b.p.z,0,0,0,0.25,1.6,0.6,0.55,0.85,1,0.7,0,0);else{if(Math.random()<0.8)smoke.spawn(b.p.x,b.p.y,b.p.z,0,0.3,0,0.35,0.7,1.4,0.92,0.92,0.9,0.35,0,0);if(nearCam(b.p))glow.spawn(b.p.x,b.p.y,b.p.z,0,0,0,0.16,0.9,0.35,1,0.72,0.42,0.55,0,0);}
     if(b.o.burn&&Math.random()<0.7)glow.spawn(b.p.x,b.p.y,b.p.z,0,0.5,0,0.3,1.4,0.4,1,0.5,0.15,0.9,0,0);
-    let done=false;
     if(b.o.visual){const tl=[player,...enemies];for(const sh of tl){if(!sh.alive||sh.sinking||sh===b.owner)continue;if(Math.abs(sh.pos.x-b.p.x)>sh.L||Math.abs(sh.pos.z-b.p.z)>sh.L)continue;if(hitTest(sh,b.p)){fxHit(b.p);sfx('hit',vol3d(b.p)*0.7);done=true;break;}}}
     else{const targets=b.owner.isPlayer?playerTargets():[player];
       for(const sh of targets){if(!sh.alive||sh.sinking||b.hit.has(sh))continue;if(Math.abs(sh.pos.x-b.p.x)>sh.L||Math.abs(sh.pos.z-b.p.z)>sh.L)continue;if(hitTest(sh,b.p)){damage(sh,b.dmg,b.owner,b.p,b.o);b.hit.add(sh);if(!b.o.pierce){done=true;break;}}}}
@@ -1504,6 +1529,7 @@ function updateBalls(dt){
     if(!done&&b.p.y<1.5){for(const isl of islands){const d=Math.hypot(b.p.x-isl.x,b.p.z-isl.z);if(d<isl.R*0.85&&b.p.y<isl.h(b.p.x-isl.x,b.p.z-isl.z)+0.5){fxDust(b.p);done=true;break;}}}
     if(!done&&b.p.y<waveH(b.p.x,b.p.z)-0.2){if(nearCam(b.p))fxSplash(b.p.x,b.p.z,false);sfx('splash',vol3d(b.p)*0.8);done=true;}
     if(b.t>4)done=true;
+    }
     if(done){b.alive=false;ballMesh.setMatrixAt(i,ZERO_M);}else{_m4.makeTranslation(b.p.x,b.p.y,b.p.z);ballMesh.setMatrixAt(i,_m4);}
   }
   ballMesh.instanceMatrix.needsUpdate=true;
@@ -1880,7 +1906,7 @@ function netEvent(arr){if(!NET.room)return;NET.evId++;NET.ev.push([arr[0],NET.ev
 function sanitizeNick(s){return String(s||'').replace(/[\u0000-\u001f\u007f-\u009f​-‏‪-‮⁠-⁯﻿]/g,'').trim().slice(0,16);}
 function netPresence(){
   if(!NET.room)return;
-  const base={v:playing?1:0,n:nick,cu:validCu(save.custom)?save.custom:[1,0,0,0]};
+  const base={v:playing?1:0,t:Math.round(performance.now()),n:nick,cu:validCu(save.custom)?save.custom:[1,0,0,0]};
   if(save.guild)Object.assign(base,{g:save.guild.id,gn:save.guild.name,gc:save.guild.c,ge:save.guild.e,gl:save.guild.leader?1:0});
   if(playing&&player){Object.assign(base,{x:Math.round(player.pos.x*10)/10,z:Math.round(player.pos.z*10)/10,h:Math.round(player.heading*1000)/1000,sp:Math.round(player.speed*10)/10,hp:Math.max(0,Math.round(player.hp)),mh:player.maxHp,lv:save.level,ti:player.tier,al:player.alive?1:0,sf:(currentPort||portOpen)?1:0,gh:U.ghostT>0?1:0,ev:NET.ev});}
   NET.room.presence(cleanJSON(base)).then(()=>{if(NET.presErr){NET.presErr='';renderLobby();}}).catch(e=>{const c=e&&e.code||'err';if(NET.presErr!==c){NET.presErr=c;renderLobby();}});
@@ -1929,13 +1955,14 @@ async function p2pHost(tries){
   attachRoom(p2pRoomObj());P2P.isHost=true;NET.myPeer='host';
   P2P.timer=setTimeout(()=>{if(NET.state!=='on')p2pFail('Oda sunucusuna ulaşılamadı');},15000);
   peer.on('open',()=>{clearTimeout(P2P.timer);P2P.myId='host';p2pConnected();
-    P2P.tick=setInterval(()=>{const nowT=Date.now();for(const [id,c] of P2P.conns)if(nowT-c.seen>8000){try{c.conn.close();}catch(e){}P2P.conns.delete(id);}
+    let pingT=0;P2P.tick=setInterval(()=>{const nowT=Date.now();for(const [id,c] of P2P.conns)if(nowT-c.seen>8000){try{c.conn.close();}catch(e){}P2P.conns.delete(id);}
+      if(nowT-pingT>2000){pingT=nowT;for(const c of P2P.conns.values())if(c.conn.open){try{c.conn.send({t:'pi',c:performance.now()});}catch(e){}}let w=0;for(const c of P2P.conns.values())w=Math.max(w,c.rtt||0);NET.ping=P2P.conns.size?w:0;renderLobby();}
       const list=[{peer:'host',presence:P2P.state}];for(const [id,c] of P2P.conns)if(c.pr)list.push({peer:id,presence:c.pr});
-      for(const c of P2P.conns.values())if(c.conn.open){try{c.conn.send({t:'s',peers:list});}catch(e){}}p2pDeliver(list,'host');},100);});
+      P2P.q=(P2P.q||0)+1;for(const c of P2P.conns.values())if(c.conn.open){try{c.conn.send({t:'s',q:P2P.q,peers:list});}catch(e){}}p2pDeliver(list,'host');},66);});
   peer.on('connection',conn=>{if(P2P.conns.size>=7){conn.on('open',()=>{try{conn.send({t:'full'});}catch(e){}setTimeout(()=>conn.close(),300);});return;}
     const ent={conn,pr:null,seen:Date.now()};
     conn.on('open',()=>P2P.conns.set(conn.peer,ent));
-    conn.on('data',d=>{ent.seen=Date.now();if(d&&d.t==='p'&&d.pr&&typeof d.pr==='object'&&!Array.isArray(d.pr))ent.pr=d.pr;});
+    conn.on('data',d=>{ent.seen=Date.now();if(!d)return;if(d.t==='p'&&d.pr&&typeof d.pr==='object'&&!Array.isArray(d.pr)){if(!ent.pr||!(+d.pr.t<+ent.pr.t))ent.pr=d.pr;}else if(d.t==='pi'){try{conn.send({t:'po',c:d.c});}catch(e){}}else if(d.t==='po'&&typeof d.c==='number'){ent.rtt=lerp(ent.rtt||(performance.now()-d.c),performance.now()-d.c,0.5);}});
     const drop=()=>P2P.conns.delete(conn.peer);conn.on('close',drop);conn.on('error',drop);});
   peer.on('disconnected',()=>{try{peer.reconnect();}catch(e){}});
   peer.on('error',e=>{if(e&&e.type==='unavailable-id'&&tries<4)return p2pHost(tries+1);if(NET.state!=='on')p2pFail('Oda açılamadı ('+(e&&e.type||'hata')+')');});
@@ -1946,10 +1973,10 @@ async function p2pJoin(code){
   try{await loadPeerJS();}catch(e){return p2pFail('Bağlantı kitaplığı yüklenemedi; internetini kontrol et');}
   const peer=new Peer(peerOpts());P2P.peer=peer;attachRoom(p2pRoomObj());
   P2P.timer=setTimeout(()=>{if(NET.state!=='on')p2pFail('Odaya bağlanılamadı; kodu kontrol et ya da bir telefonu Wi-Fi’ya geçir');},15000);
-  peer.on('open',id=>{P2P.myId=id;NET.myPeer=id;const conn=peer.connect(peerIdOf(code),{reliable:true});P2P.host=conn;
+  peer.on('open',id=>{P2P.myId=id;NET.myPeer=id;const conn=peer.connect(peerIdOf(code),{reliable:false,serialization:'json'});P2P.host=conn;
     conn.on('open',()=>{clearTimeout(P2P.timer);P2P.seen=Date.now();p2pConnected();try{conn.send({t:'p',pr:P2P.state});}catch(e){}
-      P2P.tick=setInterval(()=>{if(Date.now()-P2P.seen>7000)p2pFail('Oda kapandı ya da bağlantı koptu');else if(conn.open){try{conn.send({t:'p',pr:P2P.state});}catch(e){}}},1000);});
-    conn.on('data',d=>{if(!d)return;P2P.seen=Date.now();if(d.t==='bye')return p2pFail('Oda kapandı; odayı açan kaptan ayrıldı');if(d.t==='s'&&Array.isArray(d.peers))p2pDeliver(d.peers,P2P.myId);else if(d.t==='full')p2pFail('Oda dolu (en fazla 8 kaptan)');});
+      P2P.tick=setInterval(()=>{if(Date.now()-P2P.seen>7000)p2pFail('Oda kapandı ya da bağlantı koptu');else if(conn.open){try{conn.send({t:'p',pr:P2P.state});conn.send({t:'pi',c:performance.now()});}catch(e){}renderLobby();}},1500);});
+    conn.on('data',d=>{if(!d)return;P2P.seen=Date.now();if(d.t==='bye')return p2pFail('Oda kapandı; odayı açan kaptan ayrıldı');if(d.t==='pi'){try{conn.send({t:'po',c:d.c});}catch(e){}return;}if(d.t==='po'&&typeof d.c==='number'){NET.ping=lerp(NET.ping||(performance.now()-d.c),performance.now()-d.c,0.5);return;}if(d.t==='s'&&Array.isArray(d.peers)){if(typeof d.q==='number'){if(d.q<=(P2P.lastQ||0)&&P2P.lastQ-d.q<1000)return;P2P.lastQ=d.q;}p2pDeliver(d.peers,P2P.myId);}else if(d.t==='full')p2pFail('Oda dolu (en fazla 8 kaptan)');});
     conn.on('close',()=>{if(NET.state==='on')p2pFail('Oda kapandı; odayı açan kaptan ayrıldı');});});
   peer.on('error',e=>{const t=e&&e.type;p2pFail(t==='peer-unavailable'?'Bu kodla açık bir oda yok':'Bağlantı hatası ('+(t||'?')+')');});
 }
@@ -1976,7 +2003,8 @@ function renderP2P(){
   else if(st==='off'){el.innerHTML='<b>Bağlantı yok.</b> '+esc(NET.why||'')+' Tekrar dene ya da tek başına oyna.';on.textContent='Tek oyunculu';}
   else{const c=P2P.code;$('roomCode').textContent=c;
     el.innerHTML=(P2P.isHost?'Odan açık. Kodu arkadaşlarına gönder; açık kaldığı sürece oda yaşar.':'<b>'+esc(c)+'</b> odasındasın.')+(others.length?' Denizdeki kaptanlar: '+names.map(esc).join(', ')+'.':' Şimdilik başka kaptan yok.');
-    on.innerHTML=`<span class="on">Oda ${esc(c)} · ${others.length+1} kaptan</span>`;}
+    const pg=Math.round(NET.ping||0);const pc=pg<90?'#86d68f':pg<180?'#ffd257':'#ff7d66';
+    on.innerHTML=`<span class="on">Oda ${esc(c)} · ${others.length+1} kaptan</span>`+(NET.ping?` · <span style="color:${pc};font-weight:800">${pg} ms</span>`:'');}
 }
 /* ---------- guilds (loncalar): state lives in each captain's presence, the leader approves joins ---------- */
 const GUILD={req:new Map(),pending:null,pendT:0,open:true,renderT:0};
@@ -2045,6 +2073,11 @@ function handlePeer(p){
   if(g.hb){if(g.gc>=0)g.hb.style.setProperty('--gc',GCOL[g.gc]);else g.hb.style.removeProperty('--gc');g.hb.classList.toggle('ally',isAlly(g));}
   if(ti!==g.tier){g.newTier=ti;g.rebuild();}
   g.tx=pr.x;g.tz=pr.z;g.th=+pr.h||0;g.tsp=+pr.sp||0;g.netT=performance.now()/1000;
+  if(typeof pr.t==='number'&&Number.isFinite(pr.t)){const nowMs=performance.now();const buf=g.buf||(g.buf=[]);const last=buf[buf.length-1];
+    if(!last||pr.t>last.st){const o=nowMs-pr.t;if(g.off===undefined){g.off=o;g.jit=30;}else{const d=o-g.off;if(d<0)g.off=o;else g.off+=d*0.02;g.jit=lerp(g.jit,Math.abs(d),0.1);}
+      if(last&&pr.t-last.st>1500)buf.length=0;
+      buf.push({st:pr.t,ts:pr.t+g.off,x:pr.x,z:pr.z,h:+pr.h||0,sp:+pr.sp||0});if(buf.length>24)buf.shift();
+      if(last){const gap=pr.t-last.st;g.gapAvg=lerp(g.gapAvg||gap,gap,0.1);}}}
   g.maxHp=Math.max(1,+pr.mh||100);g.hp=clamp(+pr.hp||0,0,g.maxHp);g.safe=!!pr.sf;g.ghostOn=!!pr.gh;g.dmg=8+0.9*(lv-1);
   const al=!!pr.al;
   if(!al&&g.alive){g.alive=false;g.sinking=true;g.sinkT=0;g.sinkRoll=rnd(-1,1)>0?0.8:-0.8;g.sinkPitch=rnd(-0.3,0.3);if(nearCam(g.pos)){fxExplosion(g.pos.x,1.5,g.pos.z,1);spawnDebris(new V3(g.pos.x,1.5,g.pos.z),12,8);}}
@@ -2077,11 +2110,23 @@ function showRemoteKraken(){const fake={pos:player.pos,heading:player.heading,W:
 function removeGhost(peer){const g=ghosts.get(peer);if(!g)return;scene.remove(g.root);disposeTree(g.root);if(g.hb)g.hb.remove();ghosts.delete(peer);NET.lastEv.delete(peer);}
 function updateGhost(g,dt){
   if(g.sinking){if(g.sinkT>8)g.root.visible=false;return;}
-  const now=performance.now()/1000;const lag=Math.min(0.6,now-(g.netT||now));
-  const tx=g.tx+Math.sin(g.th)*g.tsp*lag,tz=g.tz+Math.cos(g.th)*g.tsp*lag;
-  if(Math.hypot(tx-g.pos.x,tz-g.pos.z)>60){g.pos.x=tx;g.pos.z=tz;}
-  const ox=g.pos.x,oz=g.pos.z;const k=Math.min(1,dt*6);g.pos.x=lerp(g.pos.x,tx,k);g.pos.z=lerp(g.pos.z,tz,k);
-  const dh=wrapA(g.th-g.heading);g.heading=wrapA(g.heading+dh*k);g.angVel=clamp(dh*3,-1,1);g.speed=g.tsp;g.vel.set((g.pos.x-ox)/Math.max(dt,0.001),0,(g.pos.z-oz)/Math.max(dt,0.001));g.storm=stormAt(g.pos.x,g.pos.z);
+  const ox=g.pos.x,oz=g.pos.z;let tx,tz,th;
+  const buf=g.buf;
+  if(buf&&buf.length){
+    // render the remote ship slightly in the past and interpolate between real samples: smooth even with jittery delivery
+    const delay=clamp((g.gapAvg||100)*1.2+(g.jit||30)*1.5,70,320);const rt=performance.now()-delay;
+    let a=null,b=null;for(let i=buf.length-1;i>=0;i--){if(buf[i].ts<=rt){a=buf[i];b=buf[i+1]||null;break;}}
+    if(a&&b){const k=clamp((rt-a.ts)/Math.max(1,b.ts-a.ts),0,1);tx=lerp(a.x,b.x,k);tz=lerp(a.z,b.z,k);th=a.h+wrapA(b.h-a.h)*k;g.speed=lerp(a.sp,b.sp,k);}
+    else if(a){const e=Math.min(0.45,(rt-a.ts)/1000);tx=a.x+Math.sin(a.h)*a.sp*e;tz=a.z+Math.cos(a.h)*a.sp*e;th=a.h;g.speed=a.sp;}
+    else{const f=buf[0];tx=f.x;tz=f.z;th=f.h;g.speed=f.sp;}
+    if(Math.hypot(tx-g.pos.x,tz-g.pos.z)>60){g.pos.x=tx;g.pos.z=tz;g.heading=th;}
+    const k=Math.min(1,dt*18);g.pos.x=lerp(g.pos.x,tx,k);g.pos.z=lerp(g.pos.z,tz,k);const dh=wrapA(th-g.heading);g.heading=wrapA(g.heading+dh*k);g.angVel=clamp(dh/Math.max(dt,0.001)*0.3,-1,1);
+  }else{
+    const now=performance.now()/1000;const lag=Math.min(0.6,now-(g.netT||now));
+    tx=g.tx+Math.sin(g.th)*g.tsp*lag;tz=g.tz+Math.cos(g.th)*g.tsp*lag;
+    if(Math.hypot(tx-g.pos.x,tz-g.pos.z)>60){g.pos.x=tx;g.pos.z=tz;}
+    const k=Math.min(1,dt*6);g.pos.x=lerp(g.pos.x,tx,k);g.pos.z=lerp(g.pos.z,tz,k);const dh=wrapA(g.th-g.heading);g.heading=wrapA(g.heading+dh*k);g.angVel=clamp(dh*3,-1,1);g.speed=g.tsp;}
+  g.vel.set((g.pos.x-ox)/Math.max(dt,0.001),0,(g.pos.z-oz)/Math.max(dt,0.001));g.storm=stormAt(g.pos.x,g.pos.z);
 }
 
 /* ================= INPUT ================= */
@@ -2113,7 +2158,7 @@ function playerControl(dt){
 /* ================= CAMERA ================= */
 let zoom=1,camShake=0;const camPos=new V3(),camLook=new V3();let camInit=false;
 function updateCamera(dt){
-  const s=1+player.tier*0.15;const asp=innerWidth/innerHeight;const portrait=asp<1?1.35:1;
+  const s=1+player.tier*0.15;const asp=innerWidth/innerHeight;const portrait=asp<1?1.6:1;
   let h=50*s*zoom*portrait,d=27*s*zoom*portrait;
   const lead=4+Math.abs(player.speed)*0.5;
   let lx=player.pos.x+Math.sin(player.heading)*lead,lz=player.pos.z+Math.cos(player.heading)*lead;
@@ -2460,7 +2505,7 @@ addEventListener('resize',resize);
 let last=performance.now(),miniT=0,discT=0;
 function frame(now){
   requestAnimationFrame(frame);
-  let dt=(now-last)/1000;last=now;if(!(dt>0))dt=0.016;perfTick(dt);dt=Math.min(dt,0.05);TG=null;
+  let dt=(now-last)/1000;last=now;if(!(dt>0))dt=0.016;perfTick(dt);dt=Math.min(dt,0.1);TG=null;
   T+=dt;oceanMat.uniforms.uTime.value=T;
   updateHazards(dt);
   if(playing){
@@ -2495,7 +2540,7 @@ function frame(now){
     trailT-=dt;if(trailT<=0){trailT=1.5;const l=trail[trail.length-1];if(!l||Math.hypot(l[0]-player.pos.x,l[1]-player.pos.z)>6){trail.push([player.pos.x,player.pos.z]);if(trail.length>60)trail.shift();}}
     if(!$('mapPanel').hidden){mapT-=dt;if(mapT<=0){mapT=0.12;drawBigMap();}}
     renderGuilds(false,dt);if(GUILD.pending&&T-GUILD.pendT>60){GUILD.pending=null;}}
-  if(NET.room&&now-NET.lastSend>100){NET.lastSend=now;netPresence();}
+  if(NET.room&&now-NET.lastSend>(NET.mode==='p2p'?66:100)){NET.lastSend=now;netPresence();}
   updateGulls(dt);
   if(composer){gradePass.uniforms.uStorm.value=stormLvl;gradePass.uniforms.uTime.value=T%100;bloomPass.strength=0.42+flashV*0.8;composer.render(dt);}else renderer.render(scene,camera);
 }
