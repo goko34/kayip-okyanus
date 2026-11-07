@@ -53,6 +53,7 @@
 .setupRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .guildStart{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--parch-dim)}
 .guildStart img{width:30px;height:19px;border-radius:2px}.guildStart b{color:var(--gc)}
+.cuNote{margin:0;font-size:12px;line-height:1.4;color:var(--parch-dim)}.customBox.glock .fl{opacity:.35;pointer-events:none}
 .customBox{display:flex;flex-direction:column;gap:7px;padding:9px 10px;border-radius:6px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
 .cuRow{display:flex;gap:10px;align-items:center}.cuRow>span{width:52px;flex:none;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--parch-dim)}
 .sw{display:flex;gap:5px;flex-wrap:wrap}
@@ -73,9 +74,9 @@
 .gfPrev{display:flex;align-items:center;gap:10px;padding:8px;border-radius:6px;background:rgba(255,255,255,.05)}
 .gfPrev img{width:48px;height:30px;border-radius:3px}.gfPrev span{font-weight:800;font-size:16px}
 .gfBtns{display:flex;gap:10px;justify-content:flex-end;align-items:center;margin-top:4px}.gfBtns .btnMain{align-self:auto;padding:10px 18px;font-size:15px}
-.hb.rival .nm{color:var(--gc,var(--rival))}.hb.rival .bar i{background:var(--gc,linear-gradient(#a9dcff,#3b8fd6))}
+#labels .hb.rival .nm{color:var(--gc,var(--rival))}#labels .hb.rival .bar i{background:var(--gc,linear-gradient(#a9dcff,#3b8fd6))}#labels .hb.rival.ally .bar{border-color:var(--gc)}
 .hb.rival.ally .bar{border-color:rgba(134,214,143,.7)}
-.selfTag{color:var(--gc,#ffe08a)}
+#labels .selfTag{color:var(--gc,#ffe08a)}#labels .hb.rival .nm,#labels .selfTag{text-shadow:0 1px 2px #000,0 0 3px #000,0 0 6px rgba(0,0,0,.8)}
 html,body{height:100%;overflow:hidden;background:#0b2130;color:var(--parch);font-family:var(--ui);-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
 #app{position:fixed;inset:0;touch-action:none}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -386,7 +387,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
       <button class="btnMain" id="mResume">Devam et</button>
       <button class="chip2" id="mLobby">Lobiye dön</button>
       <p id="mHint"></p>
-      <p class="mKeys">Esc menüyü açar ve kapatır · M harita · E limana yanaş · Sürüm 18</p>
+      <p class="mKeys">Esc menüyü açar ve kapatır · M harita · E limana yanaş · Sürüm 19</p>
     </div>
   </div>
   <div id="guildForm" class="overlay" hidden>
@@ -424,8 +425,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
       <div id="customBox" class="customBox" hidden>
         <div class="cuRow"><span>Gövde</span><div class="sw" id="swHull"></div></div>
         <div class="cuRow"><span>Yelken</span><div class="sw" id="swSail"></div></div>
-        <div class="cuRow"><span>Bayrak</span><div class="sw" id="swFlag"></div></div>
-        <div class="cuRow"><span>Desen</span><div class="sw" id="swEmb"></div></div>
+        <p id="cuNote" class="cuNote" hidden></p>
+        <div class="cuRow fl"><span>Bayrak</span><div class="sw" id="swFlag"></div></div>
+        <div class="cuRow fl"><span>Desen</span><div class="sw" id="swEmb"></div></div>
       </div>
       <div class="lobby" id="lobbyInfo">Çevrimiçi lobiye bağlanılıyor…</div>
       <div id="p2pBox" class="p2p" hidden>
@@ -435,7 +437,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--brass);outline-
       </div>
       <span class="saveInfo" id="saveInfo" hidden></span>
       <button class="btnMain" id="btnStart">Denize açıl</button>
-      <span class="build">Sürüm 18 · loncalar, menü, gemi özelleştirme</span>
+      <span class="build">Sürüm 19 · lonca renkleri ve sancakları</span>
     </div>
   </div>
 </div>
@@ -744,6 +746,11 @@ function flagMatFor(fc,em){const key='c'+fc+'_'+em;if(flagMats[key])return key;c
   g.fillStyle=bgc;g.fillRect(0,0,128,80);const fg=lum(bg)>0.55?'#1a1714':'#f2ead6';drawEmblem(g,em,fg,bgc);g.fillStyle='rgba(0,0,0,.18)';g.fillRect(0,0,6,80);
   const m=new THREE.MeshPhongMaterial({map:new THREE.CanvasTexture(c),side:THREE.DoubleSide,shininess:1});m.userData.shared=true;flagMats[key]=m;return key;}
 const _palCache=new Map();
+function guildFlagKey(c,e){const key='g'+c+'_'+e;if(flagMats[key])return key;const cv=document.createElement('canvas');cv.width=128;cv.height=80;const g=cv.getContext('2d');const bg=GCOL[c];
+  g.fillStyle=bg;g.fillRect(0,0,128,80);drawEmblem(g,e,'#f2ead6',bg);g.fillStyle='rgba(0,0,0,.18)';g.fillRect(0,0,6,80);
+  const m=new THREE.MeshPhongMaterial({map:new THREE.CanvasTexture(cv),side:THREE.DoubleSide,shininess:1});m.userData.shared=true;flagMats[key]=m;return key;}
+function palFor(cu,gi){const base=customPal(cu);if(!gi)return base;const key=(validCu(cu)?cu:[1,0,0,0]).join(',')+'|g'+gi.c+'_'+gi.e;let p=_palCache.get(key);if(!p){p=Object.assign({},base,{flag:guildFlagKey(gi.c,gi.e)});delete p._k;_palCache.set(key,p);}return p;}
+function applyLook(){if(!player)return;player.pal=palFor(save.custom,save.guild);player.rebuild();if(!$('customBox').hidden)renderCustom();}
 function validCu(a){return Array.isArray(a)&&a.length===4&&a.every((v,i)=>Number.isInteger(v)&&v>=0&&v<10);}
 function customPal(cu){if(!validCu(cu))cu=[1,0,0,0];const key=cu.join(',');let p=_palCache.get(key);if(p)return p;
   const H=new THREE.Color(CUST.hull[cu[0]]),S=new THREE.Color(CUST.sail[cu[1]]);
@@ -1999,13 +2006,13 @@ function renderGuilds(force,dt){
 function renderGuildStart(){const el=$('guildStart');if(!el)return;const G=save.guild;
   const h=G?`<img src="${guildFlagURL(G.c,G.e)}" alt=""><span style="--gc:${GCOL[G.c]}">Lonca: <b>${esc(G.name)}</b>${G.leader?' (lider)':''}</span><button class="chip2 ghost" data-leave="1">${G.leader?'Dağıt':'Ayrıl'}</button>`:`<button class="chip2" data-create="1">Lonca kur</button><span>ya da oyunda bir loncaya katıl</span>`;
   if(GUILD.lastS!==h){GUILD.lastS=h;el.innerHTML=h;}}
-function leaveGuild(){if(!save.guild)return;if(save.guild.leader)netEvent(['gd',save.guild.id]);toast(save.guild.leader?`<b>${esc(save.guild.name)}</b> dağıtıldı`:`<b>${esc(save.guild.name)}</b> loncasından ayrıldın`,null);save.guild=null;GUILD.req.clear();persist();renderGuilds(true);hudDirty=true;}
+function leaveGuild(){if(!save.guild)return;if(save.guild.leader)netEvent(['gd',save.guild.id]);toast(save.guild.leader?`<b>${esc(save.guild.name)}</b> dağıtıldı`:`<b>${esc(save.guild.name)}</b> loncasından ayrıldın`,null);save.guild=null;GUILD.req.clear();persist();renderGuilds(true);hudDirty=true;applyLook();}
 function requestJoin(gid){const G=guildList().find(x=>x.id===gid);if(!G||!G.leaderPeer)return;if(save.guild)leaveGuild();GUILD.pending=gid;GUILD.pendT=T;netEvent(['jr',G.leaderPeer,gid]);toast(`<b>${esc(G.name)}</b> liderine katılma isteği gönderildi`,'rival');renderGuilds(true);}
 function guildEvent(g,e){const t=e[0],to=e[2],gid=t==='gd'?e[2]:e[3];
-  if(t==='gd'){if(save.guild&&!save.guild.leader&&save.guild.id===gid){toast(`Lider <b>${esc(save.guild.name)}</b> loncasını dağıttı`,'bad');save.guild=null;persist();hudDirty=true;}renderGuilds(true);return;}
+  if(t==='gd'){if(save.guild&&!save.guild.leader&&save.guild.id===gid){toast(`Lider <b>${esc(save.guild.name)}</b> loncasını dağıttı`,'bad');save.guild=null;persist();hudDirty=true;applyLook();}renderGuilds(true);return;}
   if(to!==NET.myPeer)return;
   if(t==='jr'){if(save.guild&&save.guild.leader&&save.guild.id===gid){GUILD.req.set(g.peer,{nick:g.nick,t:T});GUILD.open=true;$('guildBox').classList.remove('closed');toast(`<b>${esc(g.nick)}</b> loncana katılmak istiyor`,'rival');sfx('coin',0.5);renderGuilds(true);}}
-  else if(t==='ja'){if(GUILD.pending===gid&&g.gid===gid){save.guild={id:gid,name:g.gname,c:g.gc,e:g.ge,leader:false};GUILD.pending=null;persist();toast(`<b>${esc(g.gname)}</b> loncasına katıldın!`,'good');sfx('up',0.7);hudDirty=true;renderGuilds(true);}}
+  else if(t==='ja'){if(GUILD.pending===gid&&g.gid===gid){save.guild={id:gid,name:g.gname,c:g.gc,e:g.ge,leader:false};GUILD.pending=null;persist();applyLook();toast(`<b>${esc(g.gname)}</b> loncasına katıldın!`,'good');sfx('up',0.7);hudDirty=true;renderGuilds(true);}}
   else if(t==='jd'){if(GUILD.pending===gid){GUILD.pending=null;toast('Katılma isteğin reddedildi','bad');renderGuilds(true);}}
 }
 function answerReq(peer,ok){const r=GUILD.req.get(peer);if(!r||!save.guild)return;GUILD.req.delete(peer);netEvent([ok?'ja':'jd',peer,save.guild.id]);if(ok)toast(`<b>${esc(r.nick)}</b> loncaya alındı`,'good');renderGuilds(true);}
@@ -2022,7 +2029,7 @@ $('gfEmb').addEventListener('click',e=>{const b=e.target.closest('[data-ge]');if
 $('gName').addEventListener('input',()=>{$('gfPrevName').textContent=cleanName($('gName').value)||'Lonca adı';});
 $('gfCancel').addEventListener('click',()=>{$('guildForm').hidden=true;});
 $('gfOk').addEventListener('click',()=>{const n=cleanName($('gName').value);if(n.length<2){$('gName').focus();$('gName').placeholder='En az 2 harf yaz';return;}
-  save.guild={id:Math.random().toString(36).slice(2,10).replace(/[^a-z0-9]/g,'x').padEnd(8,'x'),name:n,c:GF.c,e:GF.e,leader:true};GUILD.pending=null;persist();$('guildForm').hidden=true;toast(`<b>${esc(n)}</b> loncası kuruldu. Diğer kaptanlar listeden katılma isteği gönderebilir.`,'good');hudDirty=true;renderGuilds(true);});
+  save.guild={id:Math.random().toString(36).slice(2,10).replace(/[^a-z0-9]/g,'x').padEnd(8,'x'),name:n,c:GF.c,e:GF.e,leader:true};GUILD.pending=null;persist();applyLook();$('guildForm').hidden=true;toast(`<b>${esc(n)}</b> loncası kuruldu. Diğer kaptanlar listeden katılma isteği gönderebilir.`,'good');hudDirty=true;renderGuilds(true);});
 function handlePeer(p){
   const pr=p.presence||{};let g=ghosts.get(p.peer);
   if(pr.v!==1||typeof pr.x!=='number'||typeof pr.z!=='number'){if(g)removeGhost(p.peer);return;}
@@ -2033,8 +2040,8 @@ function handlePeer(p){
     ghosts.set(p.peer,g);const evs=Array.isArray(pr.ev)?pr.ev:[];NET.lastEv.set(p.peer,evs.reduce((m,e)=>Math.max(m,+e[1]||0),0));
     if(playing)toast(`<b>${esc(sanitizeNick(pr.n)||'Bir kaptan')}</b> aynı denize açıldı`,'rival');}
   g.nick=sanitizeNick(pr.n)||'Adsız kaptan';g.level=lv;
-  if(cu.join(',')!==g.cuKey){g.cuKey=cu.join(',');g.pal=customPal(cu);g.newTier=ti;g.rebuild();}
-  const gi=readGuild(pr);g.gid=gi?gi.id:null;g.gname=gi?gi.name:'';g.gc=gi?gi.c:-1;g.ge=gi?gi.e:0;g.gl=!!(gi&&gi.leader);
+  const gi=readGuild(pr);const lk=cu.join(',')+(gi?'|'+gi.c+'_'+gi.e:'');
+  if(lk!==g.cuKey){g.cuKey=lk;g.pal=palFor(cu,gi);g.newTier=ti;g.rebuild();}g.gid=gi?gi.id:null;g.gname=gi?gi.name:'';g.gc=gi?gi.c:-1;g.ge=gi?gi.e:0;g.gl=!!(gi&&gi.leader);
   if(g.hb){if(g.gc>=0)g.hb.style.setProperty('--gc',GCOL[g.gc]);else g.hb.style.removeProperty('--gc');g.hb.classList.toggle('ally',isAlly(g));}
   if(ti!==g.tier){g.newTier=ti;g.rebuild();}
   g.tx=pr.x;g.tz=pr.z;g.th=+pr.h||0;g.tsp=+pr.sp||0;g.netT=performance.now()/1000;
@@ -2138,7 +2145,7 @@ function placeHB(sh){
 }
 function updateLabels(dt){
   for(const e of enemies){if(!e.alive)continue;if(placeHB(e))e.hb.classList.toggle('danger',e.level>save.level+2);}
-  if(playerTag){if(save.guild)playerTag.style.setProperty('--gc',GCOL[save.guild.c]);else playerTag.style.removeProperty('--gc');_v.set(player.pos.x,player.H+player.L*0.85+2,player.pos.z);if(playing&&player.alive&&NET.room&&project(_v,scr)){playerTag.hidden=false;playerTag.style.transform=`translate(${scr.x}px,${scr.y}px) translate(-50%,-100%)`;const tt=(save.guild?`[${save.guild.name}] `:'')+nick;if(playerTag.textContent!==tt)playerTag.textContent=tt;}else playerTag.hidden=true;}
+  if(playerTag){if(save.guild)playerTag.style.setProperty('--gc',GCOL[save.guild.c]);else playerTag.style.removeProperty('--gc');_v.set(player.pos.x,player.H+player.L*0.85+2,player.pos.z);if(playing&&player.alive&&(NET.room||save.guild)&&project(_v,scr)){playerTag.hidden=false;playerTag.style.transform=`translate(${scr.x}px,${scr.y}px) translate(-50%,-100%)`;const tt=(save.guild?`[${save.guild.name}] `:'')+nick;if(playerTag.textContent!==tt)playerTag.textContent=tt;}else playerTag.hidden=true;}
   for(const g of ghosts.values()){if(placeHB(g)){const t=(g.gid?`[${g.gname}] `:'')+`${g.nick} · Sv ${g.level}`+(isAlly(g)?' · müttefik':g.safe?' · limanda':'');if(g.hbName.textContent!==t)g.hbName.textContent=t;}}
   for(const f of ftPool){if(!f.on)continue;f.t+=dt;if(f.t>1.3){f.on=false;f.el.hidden=true;continue;}_v.copy(f.p);_v.y+=f.t*5;if(project(_v,scr)){f.el.style.transform=`translate(${scr.x}px,${scr.y}px) translate(-50%,-50%) scale(${1+Math.max(0,0.3-f.t)})`;f.el.style.opacity=String(1-Math.max(0,f.t-0.8)/0.5);}else f.el.style.opacity='0';}
   for(const p of pois){
@@ -2297,7 +2304,7 @@ $('btnRespawn').addEventListener('click',respawn);
 function createPlayer(port){
   const a=port.dockA;const d=port.R*1.15+22;
   const lat=12+rnd(-14,14),out=d+rnd(0,14);const x=port.x+Math.cos(a)*out+Math.sin(a)*lat,z=port.z+Math.sin(a)*out-Math.cos(a)*lat;
-  player=new Ship({player:true,x,z,pal:customPal(save.custom),heading:Math.atan2(Math.cos(a),Math.sin(a))});
+  player=new Ship({player:true,x,z,pal:palFor(save.custom,save.guild),heading:Math.atan2(Math.cos(a),Math.sin(a))});
   player.invulnT=T+3;player.bumpT=-9;player.kbThr=0;player.lastPeer=null;currentPort=null;camInit=false;
   for(const k in U.cd)U.cd[k]=Math.min(U.cd[k],5);
 }
@@ -2528,14 +2535,14 @@ $('btnLeave').addEventListener('click',()=>{p2pReset();NET.why='';NET.state='idl
 $('btnCopy').addEventListener('click',()=>{const url=location.origin+location.pathname+location.search+'#'+P2P.code;const fb=$('copyFallback');
   const show=()=>{fb.hidden=false;fb.value=url;fb.focus();fb.select();};
   try{navigator.clipboard.writeText(url).then(()=>{$('btnCopy').textContent='Kopyalandı';setTimeout(()=>$('btnCopy').textContent='Davet bağlantısını kopyala',1800);},show);}catch(e){show();}});
-function renderCustom(){const cu=save.custom;
+function renderCustom(){const cu=save.custom;const lock=!!save.guild;$('customBox').classList.toggle('glock',lock);$('cuNote').hidden=!lock;if(lock){$('cuNote').innerHTML=`Loncadayken gemin <b style="color:${GCOL[save.guild.c]}">${esc(save.guild.name)}</b> sancağını taşır; bayrak rengi ve deseni loncadan gelir.`;}
   $('swHull').innerHTML=CUST.hull.map((c,i)=>`<button data-cu="0:${i}" class="${cu[0]===i?'on':''}" style="background:${hex6(c)}" aria-label="Gövde ${i+1}"></button>`).join('');
   $('swSail').innerHTML=CUST.sail.map((c,i)=>`<button data-cu="1:${i}" class="${cu[1]===i?'on':''}" style="background:${hex6(c)}" aria-label="Yelken ${i+1}"></button>`).join('');
   $('swFlag').innerHTML=CUST.flag.map((c,i)=>`<button data-cu="2:${i}" class="${cu[2]===i?'on':''}" style="background:${hex6(c)}" aria-label="Bayrak rengi ${i+1}"></button>`).join('');
   const fb=CUST.flag[cu[2]];$('swEmb').innerHTML=CUST.emb.map((n,i)=>`<button data-cu="3:${i}" class="${cu[3]===i?'on':''}" title="${esc(n)}" aria-label="${esc(n)}"><img src="${emblemURL(i,lum(fb)>0.55?'#1a1714':'#f2ead6',hex6(fb),128,80)}" alt=""></button>`).join('');}
 $('btnCustom').addEventListener('click',()=>{const b=$('customBox');b.hidden=!b.hidden;if(!b.hidden)renderCustom();});
 $('customBox').addEventListener('click',e=>{const b=e.target.closest('[data-cu]');if(!b)return;const [k,v]=b.dataset.cu.split(':').map(Number);const cu=save.custom.slice();cu[k]=v;save.custom=cu;persist();
-  player.pal=customPal(cu);player.rebuild();renderCustom();});
+  applyLook();renderCustom();});
 $('nickIn').addEventListener('input',e=>{nick=sanitizeNick(e.target.value)||nick;save.nick=nick;persist();});
 let startedOnce=false;
 function toggleMenu(force){const m=$('menuPanel');const open=force===undefined?m.hidden:force;m.hidden=!open;if(!open)return;
